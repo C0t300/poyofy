@@ -22,8 +22,9 @@
         include_once "DB.php";
         $db = new DB();
         $pdo = $db->connect();
+        $plName = $db->getPlaylistName($pdo, $_POST['pl']);
 
-        echo "<title>" . $_POST['pl'] . "</title>";
+        echo "<title>" . $plName . "</title>";
         ?>
 
     

@@ -72,7 +72,15 @@ class DB{
         return $retorno;
     }
 
+    function getPlaylistName($pdo, $plID){
+        $str = "SELECT name FROM `playlists` WHERE `ID_pl` = '" . $plID . "'";
+        #$q = $this->query($pdo, $str);
+        $q = $pdo->prepare($str);
+        $q->execute();
+        $retorno = $q->fetchAll();
+        return $retorno[0][0];
 
+    }
 
     function getPlaylistSongs($pdo, $plID){
         $str = "SELECT `ID-s` FROM `Playlist-Canciones` WHERE `ID_pl` = '" . $plID . "'";
@@ -107,7 +115,37 @@ class DB{
         return $retorno[0][0];
     }
 
-    
-    
+    function addUser($pdo, $name, $user, $pass){
+
+        $str = "INSERT INTO persona (Username, Password, Name) VALUES ('" . $user . "', '" . $pass . "', '" . $name . "')";
+        $q = $pdo->prepare($str);
+        $q->execute();
+
+        $str = "SELECT ID_ac FROM `persona` WHERE `Username` = '" . $user . "'";
+        $q = $pdo->prepare($str);
+        $q->execute();
+        $userID = $q->fetchAll()[0][0];
+        echo $userID;
+
+        $str = "INSERT INTO Usuario (ID_ac) VALUES ('" . $userID . "')";
+        $q = $pdo->prepare($str);
+        $q->execute();
+        echo "done";
+
+    }
+
+
+    function checkUserAvailable($pdo, $user){
+        $str = "SELECT username FROM `persona` WHERE `Username` = '" . $user . "'";
+        $q = $pdo->prepare($str);
+        $q->execute();
+        $userID = $q->rowCount();
+        if ($userID == 0){
+            return True;
+        }
+        return False;
+    }
+
+
 }
 ?>
