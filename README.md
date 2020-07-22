@@ -3,7 +3,9 @@
 
 ## To do:
 
-+ Trigger for persona - usuario
++ Trigger for persona - usuario [no es necesario]
 + ARREGLAR DATA ON TITLE SHOWPL [done]
-+ added test to gitignore
++ added test to gitignore [done]
++ agregar back al login [done]
++ Arreglar el myprofile
 

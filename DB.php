@@ -134,6 +134,25 @@ class DB{
 
     }
 
+    function addArtist($pdo, $name, $user, $pass){
+
+        $str = "INSERT INTO persona (Username, Password, Name) VALUES ('" . $user . "', '" . $pass . "', '" . $name . "')";
+        $q = $pdo->prepare($str);
+        $q->execute();
+
+        $str = "SELECT ID_ac FROM `persona` WHERE `Username` = '" . $user . "'";
+        $q = $pdo->prepare($str);
+        $q->execute();
+        $userID = $q->fetchAll()[0][0];
+        echo $userID;
+
+        $str = "INSERT INTO artista (ID_ac) VALUES ('" . $userID . "')";
+        $q = $pdo->prepare($str);
+        $q->execute();
+        echo "done";
+
+    }
+
 
     function checkUserAvailable($pdo, $user){
         $str = "SELECT username FROM `persona` WHERE `Username` = '" . $user . "'";

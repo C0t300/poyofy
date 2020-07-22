@@ -29,6 +29,11 @@
     <title>Crea tu cuenta!</title>
   </head>
   <body class="p-3 mb-2 bg-dark text-white">
+        
+    <form action="index.php" method="get">
+        <!--- <button type="button" style="position:absolute; top:50px; right:250px;" class="btn btn-light">Volver</button> --->
+        <input style="position:absolute; top:50px; right:250px;" class="btn btn-light" type="submit" value="Volver" name="Volver" id="Volver" />
+    </form>
     <div class="container vertical-center ">
 
     <img src="Poyofy.png" class="rounded mx-auto d-block" width="100" height="100" alt="Poyofy Icon">

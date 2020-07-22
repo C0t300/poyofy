@@ -22,8 +22,16 @@
         echo "<script type='text/javascript'>alert('$message');";
         echo 'window.location.href = "index.php";</script>';
     }
+    elseif($tipo == "artist"){
+        $db->addArtist($pdo, $name, $user, $pass);
+        $message = "Usuario creado, inicia sesion.";
+        echo "<script type='text/javascript'>alert('$message');";
+        echo 'window.location.href = "index.php";</script>';
+    }
     else{
-        echo "not done yet";
+        $message = "Esto no deberia pasar, por favor avisa al desarrollador.";
+        echo "<script type='text/javascript'>alert('$message');";
+        echo 'window.location.href = "index.php";</script>';
     }
 
 ?>
