@@ -20,6 +20,7 @@
         $db = new DB();
         $pdo = $db->connect();
         $db->addName($pdo, $_SESSION['user'], $_SESSION['name']);
+        $_SESSION['id'] = $db->getIDuser($pdo, $_SESSION['user']);
         ?>
 
     <!-- Bootstrap CSS -->
@@ -43,7 +44,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto"> 
         <li class="nav-item">
-            <a class="nav-link" href="#">Playlists</a>
+            <a class="nav-link" href="playlist.php">Playlists</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">Personas</a>

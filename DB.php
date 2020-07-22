@@ -56,6 +56,57 @@ class DB{
         return $retorno[0];
     }
 
+    function getIDuser($pdo, $u){
+        $str = "SELECT ID_ac FROM `persona` WHERE `Username` LIKE '" . $u . "'";
+        $retorno = $this->query($pdo, $str); #Name
+        return $retorno[0];
+    }
+
+    #Returns array
+    function getPlaylistUser($pdo, $ID){
+        $str = "SELECT name, ID_pl FROM `playlists` WHERE `ID_ac` = '" . $ID . "'";
+        #$q = $this->query($pdo, $str);
+        $q = $pdo->prepare($str);
+        $q->execute();
+        $retorno = $q->fetchAll();
+        return $retorno;
+    }
+
+
+
+    function getPlaylistSongs($pdo, $plID){
+        $str = "SELECT `ID-s` FROM `Playlist-Canciones` WHERE `ID_pl` = '" . $plID . "'";
+        #$q = $this->query($pdo, $str);
+        $q = $pdo->prepare($str);
+        $q->execute();
+        $retorno = $q->fetchAll();
+        return $retorno;
+    }
+
+    function getSongData($pdo, $sID){
+        $str = "SELECT name, genre, length, ID_AC, publ FROM `Canciones` WHERE `ID_s` = '" . $sID . "'";
+        #$q = $this->query($pdo, $str);
+        $q = $pdo->prepare($str);
+        $q->execute();
+        $retorno = $q->fetchAll();
+        return $retorno;
+    }
+
+    function getSongArtist($pdo, $sID){
+        $str = "SELECT ID_ac FROM `Canciones` WHERE `ID_s` = '" . $sID . "'";
+        #$q = $this->query($pdo, $str);
+        $q = $pdo->prepare($str);
+        $q->execute();
+        $retorno = $q->fetchAll();
+        $acID =  $retorno[0][0];
+        $str = "SELECT Name FROM `persona` WHERE `ID_ac` = '" . $acID . "'";
+        #$q = $this->query($pdo, $str);
+        $q = $pdo->prepare($str);
+        $q->execute();
+        $retorno = $q->fetchAll();
+        return $retorno[0][0];
+    }
+
     
     
 }
