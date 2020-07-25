@@ -26,7 +26,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <title>Bienvenido a Poyofy!</title>
+    <title>Canciones</title>
   </head>
   <body>
 
@@ -50,7 +50,7 @@
             <a class="nav-link" href="playlist.php">Playlists</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="personas.php">Personas</a>
+            <a class="nav-link" href="#">Personas</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="myprofile.php">Mi Cuenta</a>
@@ -67,6 +67,50 @@
         
     </div>
     </nav>
+
+    <span class="border ">
+        <div class="container shadow p-3 mb-5 bg-white rounded">
+            <table class="table ">
+            <thead class="thead-light">
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Artista</th>
+                <th scope="col">Duracion</th>
+                <th scope="col">Genero</th>
+                <th scope="col">Button</th>
+                </tr>
+            </thead>
+
+            <?php
+                $cont = 0;
+                $arraySongs = $db->getAllSongs($pdo); #name, genre, length, ID_AC, publ
+
+                foreach($arraySongs as $songID){
+                    $songID = $songID[0];
+                    $cont++;
+                    $arrayData = $db->getSongData($pdo, $songID);
+                    list($name, $genre, $length, $ID_AC, $publ) = $arrayData[0];
+                    $artista =  $db->getSongArtist($pdo, $songID);
+                    
+                    $min = floor($length/60);
+                    $sec = $length-($min*60);
+                    echo "  <tr>
+                            <th scope='row'>" . $cont . "</th>
+                            <td>" . $name . "</td>
+                            <td>" . $artista . "</td>
+                            <td>" . $min . ":" . $sec . "</td>
+                            <td>" . $genre . "</td>
+                            <td> <button type='button' class='btn btn-secondary'>Like</button> </td>
+
+                            </tr>";
+                }
+
+
+            ?>
+            </table>
+            </div>
+        </span>
     
    
 
