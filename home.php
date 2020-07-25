@@ -44,6 +44,9 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto"> 
         <li class="nav-item">
+            <a class="nav-link" href="#">Canciones</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="playlist.php">Playlists</a>
         </li>
         <li class="nav-item">
@@ -53,8 +56,14 @@
             <a class="nav-link" href="myprofile.php">Mi Cuenta</a>
         </li>
         </ul>
+    
         <span class="nav-item navbar-text"> <?php echo "Hola, ", $_SESSION['name']?> </span>
         <a class="nav-link" href="logout.php">Log Out</a>
+
+        <form action="search.php" method="get" class="form-inline my-2 my-lg-0" style="margin:5px;">
+            <input class="form-control mr-sm-2" name="str" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Busca!</button>
+            </form>
         
     </div>
     </nav>

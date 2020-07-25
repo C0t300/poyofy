@@ -5,9 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
     <?php
 
         if(!isset($_SESSION)) 
@@ -22,15 +19,23 @@
         include_once "DB.php";
         $db = new DB();
         $pdo = $db->connect();
-        $plName = $db->getPlaylistName($pdo, $_POST['pl']);
-
-        echo "<title>" . $plName . "</title>";
+        $db->addName($pdo, $_SESSION['user'], $_SESSION['name']);
+        $_SESSION['id'] = $db->getIDuser($pdo, $_SESSION['user']);
+        $search = $_GET['str'];
+        echo "<title>" . $search . "</title>";
         ?>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+
 
     
   </head>
-  <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <body class="">
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <nav class="navbar navbar-dark bg-dark">
     <a class="navbar-brand" href="home.php">
     <img src="Poyofy.png" width="30" height="30" alt="Poyofy Icon">
@@ -60,12 +65,13 @@
         <a class="nav-link" href="logout.php">Log Out</a>
 
         <form action="search.php" method="get" class="form-inline my-2 my-lg-0" style="margin:5px;">
-            <input class="form-control mr-sm-2" name="str" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Busca!</button>
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         
     </div>
     </nav>
+
     <span class="border ">
         <div class="container shadow p-3 mb-5 bg-white rounded">
             <table class="table">
@@ -81,8 +87,7 @@
 
             <?php
                 $cont = 0;
-                $plID = $_POST['pl'];
-                $arraySongs = $db->getPlaylistSongs($pdo, $plID); #name, genre, length, ID_AC, publ
+                $arraySongs = $db->searchSongs($pdo, $search); #name, genre, length, ID_AC, publ
 
                 foreach($arraySongs as $songID){
                     $songID = $songID[0];
@@ -106,7 +111,10 @@
             ?>
             </table>
             </div>
-            </span>
+        </span>
+    
+   
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -115,3 +123,5 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
   </body>
 </html>
+
+
