@@ -34,6 +34,10 @@
             $songdel = $_GET['songid'];
             $db->deleteFromPlaylist($pdo, $songdel);
         }
+        if(isset($_GET['songidadd'])){
+            $songadd = $_GET['songidadd'];
+            $db->addToPlaylist($pdo, $_GET['pl'], $songadd);
+        }
 
         ?>
         
@@ -151,6 +155,71 @@
             </table>
             </div>
             </span>
+
+            <div class="container">
+
+            <form action="showpl.php" method="get" class="form-inline my-2 my-lg-0" style="margin:5px;">
+                <input type='hidden' name='pl' value=' <?php echo $_GET['pl']; ?>' >
+                <input class="form-control form-control-sm" name="search" type="search" placeholder="Busca" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0 btn-sm" type="submit">Busca!</button>
+            </form>
+            </br>
+            
+            <?php
+
+                if(isset($_GET['search'])){
+                    echo "
+                    <table class='table table-sm'>
+                    <thead>
+                      <tr>
+                        <th scope='col'>Nombre</th>
+                        <th scope='col'>Artista</th>
+                        <th scope='col'>Agregar</th>
+                      </tr>
+                    </thead>
+                    <tbody>";
+
+                    $search = $_GET['search'];
+
+                    $mine = "disabled";
+                    if ($plowner == $_SESSION['id']){
+                        $mine = "";
+                    }
+
+                    $cont = 0;
+                    $arraySongs = $db->searchSongs($pdo, $search); #name, genre, length, ID_AC, publ
+
+                    foreach($arraySongs as $songID){
+                        $songID = $songID[0];
+                        $cont++;
+                        $arrayData = $db->getSongData($pdo, $songID);
+                        list($name, $genre, $length, $ID_AC, $publ) = $arrayData[0];
+                        $artista =  $db->getSongArtist($pdo, $songID);
+                        
+                        $min = floor($length/60);
+                        $sec = $length-($min*60);
+                        echo "  <tr>
+                                <td>" . $name . "</td>
+                                <td>" . $artista . "</td>
+                                <form action='showpl.php' method='get'>
+                                <input type='hidden' name='pl' value='" . $_GET['pl'] . "'>
+                                <td> <button type='submit' name='songidadd' value='" . $songID . "' class='btn btn-secondary' " . $mine . ">Agregar</button> </td>
+                                </form>
+                                </tr>";
+                                
+                    }
+                    
+
+                    echo "</tbody>
+                        </table>";
+                }
+
+            ?>
+            
+            </div>
+            
+
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

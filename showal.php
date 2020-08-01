@@ -81,7 +81,18 @@
     </nav>
     <span class="border ">
         <div class="container shadow p-3 mb-5 bg-white rounded">
-            <h2 class="text-center"> <?php echo $alname; ?><br> <small class="text-muted"><?php echo $algenre; ?></small> </h2>
+        <?php
+            if(isset($_GET['change'])){
+            
+                if($_GET['change'] == "true"){
+                    echo "<div class='alert alert-primary' role='alert'>
+                    Modificacion efectuada.
+                </div>";
+                }
+            }
+        ?>
+            <h2 class="text-center"> <?php echo $alname; ?><br> <small class="text-muted"><?php echo $algenre . " - " . $aldate; ?></small> 
+            <br> <a class="btn btn-outline-secondary btn-sm" href="changeal.php?al= <?php echo $_GET['id'];?>" role="button">Modificar</a> </h2>
             <table class="table">
             <thead>
                 <tr>

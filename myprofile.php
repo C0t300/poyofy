@@ -112,6 +112,16 @@
         </div>
     </div>
     <div class="container">
+        <h3 class="text-center" style='margin-top: 15px;'> 
+            <?php 
+                if($_SESSION['artist']){
+                    echo "Albumes";
+                }
+                else{
+                    echo "Canciones";
+                }
+            ?> 
+        </h3>
         <?php 
             if($_SESSION['artist']){
                 $albums = $db->getAlbums($pdo, $_SESSION['id']);

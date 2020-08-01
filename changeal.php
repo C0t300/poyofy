@@ -19,12 +19,15 @@
         include_once "DB.php";
         $db = new DB();
         $pdo = $db->connect();
-        $plid = $_GET['pl'];
-        $data = $db->getPlaylistData($pdo, $plid); #ID_pl, name, descr, id_ac
-        $plname = $data[1];
-        $plbio = $data[2];
-        $plowner = $data[3];
-        if($plowner != $_SESSION['id']){
+
+        $alid = $_GET['al'];
+        $data = $db->getAlbumDetail($pdo, $alid); #ID_al, nombre, canciones, genero, id_ac, fecha
+        $alname = $data[1];
+        $alsongs = $data[2];
+        $algenre = $data[3];
+        $alowner = $data[4];
+        $aldate = $data[5];
+        if($alowner != $_SESSION['id']){
             header("Location: home.php");
         }
         ?>
@@ -32,7 +35,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <title>Modifica playlist</title>
+    <title>Modifica Album</title>
   </head>
   <body>
 
@@ -76,20 +79,27 @@
     
     <div class="container">
 
-        <h2 class="text-center"> Modificar playlist<br> <small class="text-muted">Introduce solo lo que quieras cambiar</small> </h2>
-        <form action="changeplback.php" method="post">
+        <h2 class="text-center"> Modificar Album<br> <small class="text-muted">Introduce solo lo que quieras cambiar</small> </h2>
+        <form action="changealback.php" method="post">
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Nombre</label>
-                    <input type="text" class="form-control" name="name" placeholder="<?php echo $plname; ?>">
+                    <input type="text" class="form-control" name="name" placeholder="<?php echo $alname; ?>">
                 </div>
                 
                 <div class="form-group">
-                    <label for='exampleFormControlInput1'>Descripcion</label>
-                    <textarea class='form-control' name='desc' placeholder='<?php echo $plbio; ?>' rows='3'></textarea>
+                    <label for="exampleFormControlInput1">Genero</label>
+                    <input type="text" class="form-control" name="genre" placeholder="<?php echo $algenre; ?>">
                 </div>
-                <input type='hidden' name='pl' value='<?php echo $plid; ?>' >
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Fecha - <small class="text-muted"><?php echo $aldate; ?></small></label>
+                    <input type="date" class="form-control" name="date" placeholder="<?php echo $aldate; ?>">
+
+                </div>
+                <input type='hidden' name='al' value='<?php echo $alid; ?>' >
+                
 
                 <button type="submit" class="btn btn-primary">Cambiar</button>
+            
                 
                 
             </form>

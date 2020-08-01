@@ -22,10 +22,9 @@
     if(!empty($newname)){
         $db->updateNamePl($pdo, $plid, $newname);
         $change = "true";
-        $_SESSION['name'] = $newname;
     }
     if(!empty($newdesc)){
-        $db->updateBio($pdo, $plid, $newdesc);
+        $db->updateDescPl($pdo, $plid, $newdesc);
         $change = "true";
     }
 

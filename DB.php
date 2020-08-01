@@ -333,4 +333,28 @@ class DB{
         $q->execute();
     }
 
+    function updateNameAl($pdo, $ID, $newname){
+        $str = "UPDATE albumes SET nombre = '" . $newname . "' WHERE ID_al = " . $ID;
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
+    function updateDateAl($pdo, $ID, $newdate){
+        $str = "UPDATE albumes SET fecha = '" . $newdate . "' WHERE ID_al = " . $ID;
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
+    function updateGenreAl($pdo, $ID, $newgenre){
+        $str = "UPDATE albumes SET genero = '" . $newgenre . "' WHERE ID_al = " . $ID;
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
+    function addToPlaylist($pdo, $idpl, $ids){
+        $str = "INSERT INTO `Playlist-Canciones`(`ID_pl`, `ID-s`) VALUES (" . $idpl . "," . $ids . ")";
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
 }
