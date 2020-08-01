@@ -36,6 +36,8 @@
             $songdel = $_GET['songid'];
             $db->deleteFromAlbum($pdo, $songdel);
         }
+
+
         ?>
 
     
@@ -96,6 +98,10 @@
             <?php
                 $cont = 0;
                 $plID = $_GET['id'];
+                $mine = "disabled";
+                if ($alacid == $_SESSION['id']){
+                    $mine = "";
+                }
                 $arraySongs = $db->getAlbumSongs($pdo, $plID); #name, genre, length, ID_AC, publ
 
                 foreach($arraySongs as $songID){
@@ -122,8 +128,8 @@
                             <td>" . $genre . "</td>
                             <td>" . $album . "</td>
                             <form action='showal.php?" . $_GET['id'] . "' method='get'>
-                            <input type='hidden' name='id' value='" . $_GET['id'] . "' >
-                            <td> <button type='submit' name=songid value='" . $songID . "' class='btn btn-secondary'>Eliminar</button> </td>
+                            <input type='hidden' name='id' value='" . $_GET['id'] . "'>
+                            <td> <button type='submit' name=songid value='" . $songID . "' class='btn btn-secondary' " . $mine . ">Eliminar</button> </td>
                             </form>
                             </tr>";
                 }

@@ -321,4 +321,16 @@ class DB{
         $q->execute();
     }
 
+    function updateNamePl($pdo, $ID, $newname){
+        $str = "UPDATE playlists SET name = '" . $newname . "' WHERE ID_pl = " . $ID;
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
+    function updateDescPl($pdo, $ID, $newdesc){
+        $str = "UPDATE playlists SET descr = '" . $newdesc . "' WHERE ID_pl = " . $ID;
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
 }

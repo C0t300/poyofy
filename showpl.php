@@ -22,9 +22,13 @@
         include_once "DB.php";
         $db = new DB();
         $pdo = $db->connect();
-        $plName = $db->getPlaylistName($pdo, $_GET['pl']);
+        $data = $db->getPlaylistData($pdo, $_GET['pl']);
+        #ID_pl, name, descr, id_ac
+        $plname = $data[1];
+        $pldescr = $data[2];
+        $plowner = $data[3];
 
-        echo "<title>" . $plName . "</title>";
+        echo "<title>" . $plname . "</title>";
 
         if(isset($_GET['songid'])){
             $songdel = $_GET['songid'];
@@ -32,6 +36,7 @@
         }
 
         ?>
+        
 
     
   </head>
@@ -74,7 +79,20 @@
     </nav>
     <span class="border ">
         <div class="container shadow p-3 mb-5 bg-white rounded">
-            <h2 class="text-center"> <?php echo $plName; ?></h2>
+            <?php
+            if(isset($_GET['change'])){
+            
+                if($_GET['change'] == "true"){
+                    echo "<div class='alert alert-primary' role='alert'>
+                    Modificacion efectuada.
+                </div>";
+                }
+            }
+        ?>
+
+        <h2 class="text-center"> <?php echo $plname; ?> <br> <small class="text-muted"><?php echo $pldescr; ?></small> 
+        <br> <a class="btn btn-outline-secondary btn-sm" href="changepl.php?pl= <?php echo $_GET['pl'];?>" role="button">Modificar</a> </h2>
+        
             <table class="table">
             <thead>
                 <tr>
@@ -92,6 +110,11 @@
                 $cont = 0;
                 $plID = $_GET['pl'];
                 $arraySongs = $db->getPlaylistSongs($pdo, $plID); #name, genre, length, ID_AC, publ
+
+                $mine = "disabled";
+                if ($plowner == $_SESSION['id']){
+                    $mine = "";
+                }
 
                 foreach($arraySongs as $songID){
                     $songID = $songID[0];
@@ -118,7 +141,7 @@
                             <td>" . $album . "</td>
                             <form action='showpl.php?" . $_GET['pl'] . "' method='get'>
                             <input type='hidden' name='pl' value='" . $_GET['pl'] . "' >
-                            <td> <button type='submit' name=songid value='" . $songID . "' class='btn btn-secondary'>Eliminar</button> </td>
+                            <td> <button type='submit' name=songid value='" . $songID . "' class='btn btn-secondary' " . $mine . ">Eliminar</button> </td>
                             </form>
                             </tr>";
                 }
