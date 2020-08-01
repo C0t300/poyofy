@@ -22,9 +22,15 @@
         include_once "DB.php";
         $db = new DB();
         $pdo = $db->connect();
-        $plName = $db->getPlaylistName($pdo, $_GET['pl']);
+        $data = $db->getAlbumDetail($pdo, $_GET['id']);#ID_al, nombre, canciones, genero, id_ac, fecha
+        $idal = $data[0];
+        $alname = $data[1];
+        $alsongs = $data[2];
+        $algenre = $data[3];
+        $alacid = $data[4];
+        $aldate = $data[5];
 
-        echo "<title>" . $plName . "</title>";
+        echo "<title>" . $alname . "</title>";
         ?>
 
     
@@ -68,7 +74,7 @@
     </nav>
     <span class="border ">
         <div class="container shadow p-3 mb-5 bg-white rounded">
-            <h2 class="text-center"> <?php echo $plName; ?></h2>
+            <h2 class="text-center"> <?php echo $alname; ?><br> <small class="text-muted"><?php echo $algenre; ?></small> </h2>
             <table class="table">
             <thead>
                 <tr>
@@ -83,8 +89,8 @@
 
             <?php
                 $cont = 0;
-                $plID = $_GET['pl'];
-                $arraySongs = $db->getPlaylistSongs($pdo, $plID); #name, genre, length, ID_AC, publ
+                $plID = $_GET['id'];
+                $arraySongs = $db->getAlbumSongs($pdo, $plID); #name, genre, length, ID_AC, publ
 
                 foreach($arraySongs as $songID){
                     $songID = $songID[0];
@@ -97,7 +103,7 @@
                         $album = "-";
                     }
                     else{
-                        $album = $db->getAlbumDetail($pdo, $album);
+                        $album = $db->getAlbumDetail($pdo, $album)[1];
                     }
                     
                     $min = floor($length/60);

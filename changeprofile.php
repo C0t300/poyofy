@@ -5,9 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
     <?php
 
         if(!isset($_SESSION)) 
@@ -22,15 +19,17 @@
         include_once "DB.php";
         $db = new DB();
         $pdo = $db->connect();
-        $plName = $db->getPlaylistName($pdo, $_GET['pl']);
-
-        echo "<title>" . $plName . "</title>";
         ?>
 
-    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <title>Edit <?php echo $_SESSION['name'];?></title>
   </head>
   <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <nav class="navbar navbar-dark bg-dark">
     <a class="navbar-brand" href="home.php">
     <img src="Poyofy.png" width="30" height="30" alt="Poyofy Icon">
@@ -66,57 +65,43 @@
         
     </div>
     </nav>
-    <span class="border ">
-        <div class="container shadow p-3 mb-5 bg-white rounded">
-            <h2 class="text-center"> <?php echo $plName; ?></h2>
-            <table class="table">
-            <thead>
-                <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Artista</th>
-                <th scope="col">Duracion</th>
-                <th scope="col">Genero</th>
-                <th scope="col">Album</th>
-                </tr>
-            </thead>
 
-            <?php
-                $cont = 0;
-                $plID = $_GET['pl'];
-                $arraySongs = $db->getPlaylistSongs($pdo, $plID); #name, genre, length, ID_AC, publ
+    <div class="container">
 
-                foreach($arraySongs as $songID){
-                    $songID = $songID[0];
-                    $cont++;
-                    $arrayData = $db->getSongData($pdo, $songID);
-                    list($name, $genre, $length, $ID_AC, $publ) = $arrayData[0];
-                    $artista =  $db->getSongArtist($pdo, $songID);
-                    $album = $db->getSongAlbum($pdo, $songID);
-                    if(is_null($album)){
-                        $album = "-";
-                    }
-                    else{
-                        $album = $db->getAlbumDetail($pdo, $album);
-                    }
-                    
-                    $min = floor($length/60);
-                    $sec = $length-($min*60);
-                    echo "  <tr>
-                            <th scope='row'>" . $cont . "</th>
-                            <td>" . $name . "</td>
-                            <td>" . $artista . "</td>
-                            <td>" . $min . ":" . $sec . "</td>
-                            <td>" . $genre . "</td>
-                            <td>" . $album . "</td>
-                            </tr>";
-                }
-
-
-            ?>
-            </table>
+        <h2 class="text-center"> Modificar perfil<br> <small class="text-muted">Introduce solo lo que quieras cambiar</small> </h2>
+    
+        <form action="changeBack.php" method="post">
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Username</label>
+                <input type="text" class="form-control" name="user" placeholder="<?php echo $_SESSION['user']; ?>">
             </div>
-            </span>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Password</label>
+                <input type="password" class="form-control" name="pass">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Nombre</label>
+                <input type="text" class="form-control" name="name" placeholder="<?php echo $_SESSION['name']; ?>">
+            </div>
+
+            <?php 
+                if($_SESSION['artist']){
+                    echo "
+                    <div class='form-group'>
+                        <label for='exampleFormControlInput1'>Bio</label>
+                        <textarea class='form-control' name='bio' placeholder='" . $db->getBio($pdo, $_SESSION['id']) . "' rows='3'></textarea>
+                    </div>
+                    ";
+                }
+            ?>
+
+            <button type="submit" class="btn btn-primary">Cambiar</button>
+            
+            
+        </form>
+    </div>
+   
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -125,3 +110,4 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
   </body>
 </html>
+

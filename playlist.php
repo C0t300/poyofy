@@ -83,7 +83,7 @@
                                 </p>";
                         }
                         else{
-                            echo "<form action='showpl.php' method='post'>";
+                            echo "<form action='showpl.php' method='get'>";
                             foreach($array as list($n, $pid)){
                                 # <input type="submit" name="upvote" value="Upvote" />
                                 echo "

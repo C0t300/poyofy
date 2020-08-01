@@ -19,6 +19,7 @@
 
         $user = $_POST['user']; 
         $pass = $_POST['pass']; 
+
     ?>
 
     <title>Inter Login</title>
@@ -35,6 +36,8 @@
 
             $_SESSION['user'] = $user;
             $_SESSION['pass'] = $pass;
+            $_SESSION['id'] = $db->getIDuser($pdo, $user);
+            $_SESSION['artist'] = $db->isArtist($pdo, $_SESSION['id']);
 
             header("Location: checkname.php");
             die();

@@ -210,6 +210,103 @@ class DB{
         return $retorno;
     }
 
+    function isArtist($pdo, $ID){
+        $str = "SELECT * FROM `artista` WHERE `ID_ac`=" . $ID;
+        $q = $pdo->prepare($str);
+        $q->execute();
+        $lineas = $q->rowCount();
+        if ($lineas > 0){
+            return true;
+        }
+        return false;
+    }
 
+    function getBio($pdo, $ID){
+        $str = "SELECT `bio` FROM `artista` WHERE `ID_ac`=" . $ID;
+        $q = $pdo->prepare($str);
+        $q->execute();
+        $retorno = $q->fetch();
+        return $retorno[0];
+    }
+
+    function getAlbums($pdo, $ID){
+        $str = "SELECT `ID_al` FROM `albumes` WHERE `ID_ac` =" . $ID;
+        $q = $pdo->prepare($str);
+        $q->execute();
+        $am = $q->rowCount();
+        $retorno = $q->fetchAll();
+        $lista = [];
+        if($am > 0){
+            foreach($retorno as $item){
+                array_push($lista, $item[0]);
+            }
+        }
+        return $lista;
+    }
+
+    #ID_al, nombre, canciones, genero, id_ac, fecha
+    function getAlbumDetail($pdo, $ID){
+        $str = "SELECT * FROM `albumes` WHERE `ID_al` =" . $ID;
+        $q = $pdo->prepare($str);
+        $q->execute();
+        $am = $q->rowCount();
+        $retorno = $q->fetch();
+        return $retorno;
+    }
+
+    function updateUser($pdo, $ID, $newuser){
+        $str = "UPDATE persona SET Username = '" . $newuser . "' WHERE ID_ac = " . $ID;
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
+    function updateName($pdo, $ID, $newname){
+        $str = "UPDATE persona SET Name = '" . $newname . "' WHERE ID_ac = " . $ID;
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
+    function updatePass($pdo, $ID, $newpass){
+        $str = "UPDATE persona SET Password = '" . $newpass . "' WHERE ID_ac = " . $ID;
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
+    function updateBio($pdo, $ID, $newbio){
+        $str = "UPDATE artista SET bio = '" . $newbio . "' WHERE ID_ac = " . $ID;
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
+    function getPlaylistData($pdo, $ID){ #ID_pl, name, descr, id_ac
+        $str = "SELECT * FROM `playlists` WHERE `ID_pl` =" . $ID;
+        $q = $pdo->prepare($str);
+        $q->execute();
+        $retorno = $q->fetch();
+        return $retorno;
+    }
+
+    function deleteAlbum($pdo, $ID){
+        $str = "DELETE FROM albumes WHERE ID_al =" . $ID;
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
+    function getSongAlbum($pdo, $ID){
+        $str = "SELECT ID_al FROM `Canciones` WHERE `ID_s` =" . $ID;
+        $q = $pdo->prepare($str);
+        $q->execute();
+        $retorno = $q->fetch();
+        return $retorno[0];
+    }
+
+    function getAlbumSongs($pdo, $ID){
+        $str = "SELECT * FROM `Canciones` WHERE `ID_al` = '" . $ID . "'";
+        #$q = $this->query($pdo, $str);
+        $q = $pdo->prepare($str);
+        $q->execute();
+        $retorno = $q->fetchAll();
+        return $retorno;
+    }
 
 }
