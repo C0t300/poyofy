@@ -168,20 +168,11 @@ class DB{
     function searchSongs($pdo, $string){
         $query = $string;
         $min_length = 1;
-        // you can set minimum length of the query if you want
-        if(strlen($query) >= $min_length){ // if query length is more or equal minimum length then
+        if(strlen($query) >= $min_length){ 
             $query = htmlspecialchars($query); 
-            // changes characters used in html to their equivalents, for example: < to &gt;
             $str = "SELECT ID_s FROM Canciones WHERE (`name` LIKE '%".$query."%')";
-            #$q = $this->query($pdo, $str);
             $q = $pdo->prepare($str);
             $q->execute();
-            // * means that it selects all fields, you can also write: `id`, `title`, `text`
-            // articles is the name of our table
-            
-            // '%$query%' is what we're looking for, % means anything, for example if $query is Hello
-            // it will match "hello", "Hello man", "gogohello", if you want exact match use `title`='$query'
-            // or if you want to match just full word so "gogohello" is out use '% $query %' ...OR ... '$query %' ... OR ... '% $query'
             $numResults = $q->rowCount();
             $lista = [];
             if($numResults > 0){ // if one or more rows are returned do following
@@ -356,5 +347,39 @@ class DB{
         $q = $pdo->prepare($str);
         $q->execute();
     }
+
+    function searchSongsArtist($pdo, $string, $IDac){
+        $query = $string;
+        $min_length = 1;
+        if(strlen($query) >= $min_length){ 
+            $query = htmlspecialchars($query); 
+            $str = "SELECT ID_s FROM Canciones WHERE (`name` LIKE '%".$query."%') AND (`ID_ac` = " . $IDac . ")";
+            $q = $pdo->prepare($str);
+            $q->execute();
+            $numResults = $q->rowCount();
+            $lista = [];
+            if($numResults > 0){ // if one or more rows are returned do following
+                $cont = 0;
+                while($cont < $numResults){
+                    array_push($lista, $q->fetchColumn(0));
+                    $cont++;
+                }
+                return $lista;  
+            }
+            else{ // if there is no matching rows do following
+                return [];
+            }
+        }
+        else{ // if query length is less than minimum
+            return [];
+        }
+    }
+
+    function addToAlbum($pdo, $idal, $ids){
+        $str = "UPDATE `Canciones` SET `ID_al` = " . $idal . " WHERE `Canciones`.`ID_s` = " . $ids . ";";
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
 
 }
