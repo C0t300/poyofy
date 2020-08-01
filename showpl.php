@@ -25,6 +25,12 @@
         $plName = $db->getPlaylistName($pdo, $_GET['pl']);
 
         echo "<title>" . $plName . "</title>";
+
+        if(isset($_GET['songid'])){
+            $songdel = $_GET['songid'];
+            $db->deleteFromPlaylist($pdo, $songdel);
+        }
+
         ?>
 
     
@@ -78,6 +84,7 @@
                 <th scope="col">Duracion</th>
                 <th scope="col">Genero</th>
                 <th scope="col">Album</th>
+                <th scope="col">Eliminar</th>
                 </tr>
             </thead>
 
@@ -97,7 +104,7 @@
                         $album = "-";
                     }
                     else{
-                        $album = $db->getAlbumDetail($pdo, $album);
+                        $album = $db->getAlbumDetail($pdo, $album)[1];
                     }
                     
                     $min = floor($length/60);
@@ -109,6 +116,10 @@
                             <td>" . $min . ":" . $sec . "</td>
                             <td>" . $genre . "</td>
                             <td>" . $album . "</td>
+                            <form action='showpl.php?" . $_GET['pl'] . "' method='get'>
+                            <input type='hidden' name='pl' value='" . $_GET['pl'] . "' >
+                            <td> <button type='submit' name=songid value='" . $songID . "' class='btn btn-secondary'>Eliminar</button> </td>
+                            </form>
                             </tr>";
                 }
 

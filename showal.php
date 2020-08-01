@@ -31,6 +31,11 @@
         $aldate = $data[5];
 
         echo "<title>" . $alname . "</title>";
+
+        if(isset($_GET['songid'])){
+            $songdel = $_GET['songid'];
+            $db->deleteFromAlbum($pdo, $songdel);
+        }
         ?>
 
     
@@ -84,6 +89,7 @@
                 <th scope="col">Duracion</th>
                 <th scope="col">Genero</th>
                 <th scope="col">Album</th>
+                <th scope="col">Eliminar</th>
                 </tr>
             </thead>
 
@@ -115,6 +121,10 @@
                             <td>" . $min . ":" . $sec . "</td>
                             <td>" . $genre . "</td>
                             <td>" . $album . "</td>
+                            <form action='showal.php?" . $_GET['id'] . "' method='get'>
+                            <input type='hidden' name='id' value='" . $_GET['id'] . "' >
+                            <td> <button type='submit' name=songid value='" . $songID . "' class='btn btn-secondary'>Eliminar</button> </td>
+                            </form>
                             </tr>";
                 }
 

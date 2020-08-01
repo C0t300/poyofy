@@ -309,4 +309,16 @@ class DB{
         return $retorno;
     }
 
+    function deleteFromAlbum($pdo,$ID){
+        $str = "UPDATE `Canciones` SET `ID_al` = NULL WHERE `Canciones`.`ID_s` = ". $ID . "";
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
+    function deleteFromPlaylist($pdo,$ID){
+        $str = "DELETE FROM `Playlist-Canciones` WHERE `ID-s` = " . $ID;
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
 }

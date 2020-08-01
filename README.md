@@ -8,8 +8,10 @@
 + added test to gitignore [done]
 + agregar back al login [done]
 + agregar todas las BD [done]
-+ Arreglar el myprofile
++ Arreglar el myprofile [done]
 + en /playlist poner las seguidas, no las creadas
++ Agregar a playlist/albumes en sus propias paginas, usando el buscador del navbar
++ editar playlists y albumes
 
 ### Index:
 

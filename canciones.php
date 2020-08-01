@@ -78,7 +78,6 @@
                 <th scope="col">Artista</th>
                 <th scope="col">Duracion</th>
                 <th scope="col">Genero</th>
-                <th scope="col">Button</th>
                 </tr>
             </thead>
 
@@ -101,8 +100,6 @@
                             <td>" . $artista . "</td>
                             <td>" . $min . ":" . $sec . "</td>
                             <td>" . $genre . "</td>
-                            <td> <button type='button' class='btn btn-secondary'>Like</button> </td>
-
                             </tr>";
                 }
 
