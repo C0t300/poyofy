@@ -30,6 +30,11 @@
 
         echo "<title>" . $plname . "</title>";
 
+        $mine = "disabled";
+        if ($plowner == $_SESSION['id']){
+            $mine = "";
+        }
+
         if(isset($_GET['songid'])){
             $songdel = $_GET['songid'];
             $db->deleteFromPlaylist($pdo, $songdel);
@@ -95,7 +100,7 @@
         ?>
 
         <h2 class="text-center"> <?php echo $plname; ?> <br> <small class="text-muted"><?php echo $pldescr; ?></small> 
-        <br> <a class="btn btn-outline-secondary btn-sm" href="changepl.php?pl= <?php echo $_GET['pl'];?>" role="button">Modificar</a> </h2>
+        <br> <a class="btn btn-outline-secondary btn-sm" href="changepl.php?pl= <?php echo $_GET['pl'];?>" role="button" <?php if($mine == "disabled"){ echo "style=pointer-events:none;";}?>>Modificar</a> </h2>
         
             <table class="table">
             <thead>
@@ -181,10 +186,7 @@
 
                     $search = $_GET['search'];
 
-                    $mine = "disabled";
-                    if ($plowner == $_SESSION['id']){
-                        $mine = "";
-                    }
+                    
 
                     $cont = 0;
                     $arraySongs = $db->searchSongs($pdo, $search); #name, genre, length, ID_AC, publ

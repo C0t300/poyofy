@@ -29,6 +29,10 @@
         $algenre = $data[3];
         $alacid = $data[4];
         $aldate = $data[5];
+        $mine = "disabled";
+                if ($alacid == $_SESSION['id']){
+                    $mine = "";
+                }
 
         echo "<title>" . $alname . "</title>";
 
@@ -114,10 +118,7 @@
             <?php
                 $cont = 0;
                 $plID = $_GET['id'];
-                $mine = "disabled";
-                if ($alacid == $_SESSION['id']){
-                    $mine = "";
-                }
+                
                 $arraySongs = $db->getAlbumSongs($pdo, $plID); #name, genre, length, ID_AC, publ
 
                 foreach($arraySongs as $songID){

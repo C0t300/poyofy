@@ -72,28 +72,45 @@
                 
                     <?php
 
-                        $array = $db->getPlaylistUser($pdo, $_SESSION['id']);
+                        $array = $db->playlistFollowed($pdo, $_SESSION['id']);
+
+                        #array -> name
+
                         if(empty($array)){
                             echo "
                                 <div class='jumbotron bg-dark text-white'>
                                 <h1 class='display-4'>No hay playlists</h1>
-                                <p class='lead'>Crea una playlist! </p>
+                                <p class='lead'>Sigue una playlist! </p>
                                 <p class='lead'>
                                 <a class='btn btn-primary btn-lg' href='home.php' role='button'>Volver</a>
                                 </p>";
                         }
                         else{
+                            echo "<h2> Playlists Seguidas </h2> <br>";
                             echo "<form action='showpl.php' method='get'>";
-                            foreach($array as list($n, $pid)){
+                            foreach($array as list($pid)){
                                 # <input type="submit" name="upvote" value="Upvote" />
                                 echo "
                                     <button type='submit' name='pl' value='" . $pid . "' class='list-group-item list-group-item-action'>
-                                        " . $n . "
+                                        " . $db->getPlaylistName($pdo, $pid) . "
                                     </button>";
                             }
-                            echo "</form>";
+                            echo "</form> <br> <br>";
                         }
 
+                        echo "<h2> Todas las playlists </h2> <br>";
+                        $arraypl = $db->getAllPlaylists($pdo);
+
+                        if(count($arraypl) > 0){
+                            echo "<form action='showpl.php' method='get'>";
+                            foreach($arraypl as list($IDpl, $name, $descr, $idac)){
+                                echo "
+                                    <button type='submit' name='pl' value='" . $IDpl . "' class='list-group-item list-group-item-action'>
+                                        " . $name . "
+                                    </button>";
+                            }
+                            echo "</form> <br> <br>";
+                        }
                         
                     ?>
                 </div>

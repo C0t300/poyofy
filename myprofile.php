@@ -118,7 +118,7 @@
                     echo "Albumes";
                 }
                 else{
-                    echo "Canciones";
+                    echo "Playlists";
                 }
             ?> 
         </h3>

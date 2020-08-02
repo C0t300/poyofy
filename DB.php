@@ -381,5 +381,26 @@ class DB{
         $q->execute();
     }
 
+    function playlistFollowed($pdo, $ID){
+        $str = "SELECT `ID_pl` FROM `persona-playlist` WHERE `ID_ac` =" . $ID;
+        #$q = $this->query($pdo, $str);
+        $q = $pdo->prepare($str);
+        $q->execute();
+        $retorno = $q->fetchAll();
+        return $retorno;
+    }
+
+    #array
+    #ID_pl, name, descr, ID_ac
+    function getAllPlaylists($pdo){
+        $str = "SELECT * FROM `playlists`"; 
+        #$q = $this->query($pdo, $str);
+        $q = $pdo->prepare($str);
+        $q->execute();
+        $retorno = $q->fetchAll();
+        return $retorno;
+    }
+
+    
 
 }
