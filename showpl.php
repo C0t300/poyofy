@@ -100,7 +100,8 @@
         ?>
 
         <h2 class="text-center"> <?php echo $plname; ?> <br> <small class="text-muted"><?php echo $pldescr; ?></small> 
-        <br> <a class="btn btn-outline-secondary btn-sm" href="changepl.php?pl= <?php echo $_GET['pl'];?>" role="button" <?php if($mine == "disabled"){ echo "style=pointer-events:none;";}?>>Modificar</a> </h2>
+        <br> <a class="btn btn-outline-secondary btn-sm" href="changepl.php?pl= <?php echo $_GET['pl'];?>" role="button" <?php if($mine == "disabled"){ echo "style=pointer-events:none;";}?>>Modificar</a>
+        <br> <a class="btn btn-outline-secondary btn-sm" href="followpl.php?pl= <?php echo $_GET['pl'];?>" role="button"> <?php if($db->isFollowing($pdo, $_GET['pl'], $_SESSION['id'])){ echo "Dejar de seguir";} else{echo "Seguir";}?></a> </h2>
         
             <table class="table">
             <thead>

@@ -15,8 +15,11 @@
 + en /playlist poner las seguidas, no las creadas [done]
 + Agregar a playlist/albumes en sus propias paginas, usando el buscador del navbar [done]
 + editar playlists y albumes [done]
-+ seguir personas
-+ seguir playlists 
++ seguir personas 
++ dejar de seguir playlists [done]
++ seguir playlists [done]
++ likes canciones
++ borrar playlist
 
 #### Index
 

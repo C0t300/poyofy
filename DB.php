@@ -401,6 +401,29 @@ class DB{
         return $retorno;
     }
 
+    function isFollowing($pdo, $pl, $idac){
+        $str = "SELECT * FROM `persona-playlist` WHERE `ID_ac` = " . $idac . " AND `ID_pl` = " . $pl . "";
+        $q = $pdo->prepare($str);
+        $q->execute();
+        $cant = $q->rowCount();
+        if ($cant > 0){
+            return true;
+        }
+        return false;
+    }
+
+    function followPlaylist($pdo, $pl, $idac){
+        $str = "INSERT INTO `persona-playlist` (`ID_ac`, `ID_pl`) VALUES ('" . $idac . "', '" . $pl . "')";
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
+    function unfollowPlaylist($pdo, $pl, $idac){
+        $str = "DELETE FROM `persona-playlist` WHERE `persona-playlist`.`ID_ac` = " . $idac . " AND `persona-playlist`.`ID_pl` = " . $pl;
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
     
+
 
 }
