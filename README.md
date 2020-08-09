@@ -20,13 +20,13 @@
 + borrar playlist [done]
 + likes canciones [done]
 + unlike songs [done]
++ agregar cuando seguidores tiene una playlist [done]
 + seguir personas 
 + dejar de seguir personas
 + crear albums
 + crear playlists
 + crear canciones
 + ver persona
-+ agregar cuando seguidores tiene una playlist
 + agregar cuando seguidores tiene una persona
 
 

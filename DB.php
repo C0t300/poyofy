@@ -455,6 +455,13 @@ class DB{
         $q->execute();
     }
 
+    function getAmmountFollowers($pdo, $idpl){
+        $str = "SELECT * FROM `persona-playlist` WHERE `ID_pl` = " . $idpl;
+        $q = $pdo->prepare($str);
+        $q->execute();
+        return $q->rowCount();
+    }
+
     
 
 }
