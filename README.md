@@ -21,13 +21,14 @@
 + likes canciones [done]
 + unlike songs [done]
 + agregar cuando seguidores tiene una playlist [done]
-+ seguir personas 
-+ dejar de seguir personas
++ seguir personas [done]
++ dejar de seguir personas [done]
++ ver persona [done]
++ agregar cuantos seguidores tiene una persona [done]
 + crear albums
 + crear playlists
 + crear canciones
-+ ver persona
-+ agregar cuando seguidores tiene una persona
++ ARREGLAR EL NAVBAR EN TODOS LADOS
 
 
 #### Index

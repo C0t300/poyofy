@@ -462,6 +462,54 @@ class DB{
         return $q->rowCount();
     }
 
+    function getFollowing($pdo, $idac){       #{{1}, {2}, {3}}
+        $str = "SELECT `ID_acFollows` FROM `persona-persona` WHERE `ID_acUser` = " . $idac;
+        $q = $pdo->prepare($str);
+        $q->execute();
+        return $q->fetchAll();
+    }
+
+    function followac($pdo, $idac1, $idac2){
+        $str = "INSERT INTO `persona-persona` (`ID_acUser`, `ID_acFollows`) VALUES ('" . $idac1 . "', '" . $idac2 . "')";
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
+    function unfollowac($pdo, $idac1, $idac2){
+        $str = "DELETE FROM `persona-persona` WHERE `persona-persona`.`ID_acUser` = " . $idac1 . " AND `persona-persona`.`ID_acFollows` = " . $idac2;
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
     
 
+    function getAccountData($pdo, $idac){           #Username, Name
+        $str = "SELECT `Username`, `Name` FROM persona WHERE `ID_ac` = " . $idac;
+        $q = $pdo->prepare($str);
+        $q->execute();
+        return $q->fetch();
+    }
+
+    function getAllPeopleID($pdo, $idac){
+        $str = "SELECT `ID_ac` FROM `persona` WHERE `ID_ac` != " . $idac;
+        $q = $pdo->prepare($str);
+        $q->execute();
+        return $q->fetchAll();
+    }
+
+    function isFollowingAccount($pdo, $idac1, $idac2){
+        $str = "SELECT * FROM `persona-persona` WHERE `ID_acUser` = " . $idac1 . " AND `ID_acFollows` = " . $idac2;
+        $q = $pdo->prepare($str);
+        $q->execute();
+        if($q->rowCount() > 0){
+            return true;
+        }
+        return false;
+    }   
+
+    function getAmmountFollowersAccount($pdo, $idac){
+        $str = "SELECT * FROM `persona-persona` WHERE `ID_acFollows` = " . $idac;
+        $q = $pdo->prepare($str);
+        $q->execute();
+        return $q->rowCount();
+    }
 }

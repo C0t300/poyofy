@@ -21,8 +21,13 @@
         include_once "DB.php";
         $db = new DB();
         $pdo = $db->connect();
+        $idac = $_GET['ac'];
+        list($usr, $nam) = $db->getAccountData($pdo, $idac);
+        $artist = $db->isArtist($pdo, $idac);
 
-        echo "<title>" . $_SESSION['name'] . "</title>";
+        
+
+        echo "<title>" . $nam . "</title>";
         ?>
 
     
@@ -71,7 +76,8 @@
     
     <div class="container" style="margin-top:25px">
 
-    <?php
+   <!--  <?php
+        
         if(isset($_GET['change'])){
         
             if($_GET['change'] == "true"){
@@ -80,14 +86,14 @@
               </div>";
             }
         }
-    ?>
+    ?> -->
 
         
 
         <div class="card text-center">
             <div class="card-header">
             <?php 
-                if($_SESSION['artist']){
+                if($artist){
                     echo "Artista";
                 }
                 else{
@@ -97,16 +103,28 @@
             ?>
             </div>
             <div class="card-body">
-                <h5 class="card-title"><?php echo $_SESSION['name']?></h5>
+                <h5 class="card-title"><?php echo $nam?></h5>
                 <?php 
             
-                if($_SESSION['artist']){
-                echo "<p class='card-text'>" . $db->getBio($pdo,$_SESSION['id']) . "</p>";
+                if($artist){
+                echo "<p class='card-text'>" . $db->getBio($pdo,$idac) . "</p>";
                 }
 
-                echo "<p class='card-text'> Seguidores: " . $db->getAmmountFollowersAccount($pdo,$_SESSION['id']) . "</p>";
+                echo "<p class='card-text'> Seguidores: " . $db->getAmmountFollowersAccount($pdo,$idac) . "</p>";
+
+                if($db->isFollowingAccount($pdo, $_SESSION['id'], $idac)){
+                    $fl = "Unfollow";
+                }
+                else{
+                    $fl = "Follow";
+                }
+                
+                echo "<form action='followac.php' method='get'>
+                    <input type='hidden' name='ac' value='" . $_GET['ac'] . "'>
+                    <td> <button type='submit' class='btn btn-secondary'>" . $fl . "</button> </td>
+                    </form>";
                 ?>
-                <a href="changeprofile.php" class="btn btn-primary">Modificar</a>
+
             </div>
             <div class="card-footer text-muted">
                 Poyofy
@@ -116,7 +134,7 @@
     <div class="container">
         <h3 class="text-center" style='margin-top: 15px;'> 
             <?php 
-                if($_SESSION['artist']){
+                if($artist){
                     echo "Albumes";
                 }
                 else{
@@ -125,8 +143,8 @@
             ?> 
         </h3>
         <?php 
-            if($_SESSION['artist']){
-                $albums = $db->getAlbums($pdo, $_SESSION['id']);
+            if($artist){
+                $albums = $db->getAlbums($pdo, $idac);
                 echo "<div class='card-deck' style='margin-top:25px'>";
                 foreach($albums as $al){
                     
@@ -143,7 +161,6 @@
                         <h6 class='card-subtitle mb-2 text-muted'>" . $date . "</h6>
                         <p class='card-text'>" . $genre . "</p>
                         <a href='showal.php?id=" . $idal . "' class='card-link'>Ver Album</a>
-                        <a href='delal.php?id=" . $idal . " 'class='card-link'>Eliminar</a>
                     </div>
                     ";
                     echo "</div>";
@@ -152,7 +169,7 @@
                 
             }
             else{
-                $playlists = $db->getPlaylistUser($pdo, $_SESSION['id']);
+                $playlists = $db->getPlaylistUser($pdo, $idac);
                 echo "<div class='card-deck' style='margin-top:25px'>";
                 foreach($playlists as $pl){
                     $pl = $pl[1];
@@ -168,7 +185,6 @@
                         <h5 class='card-title'>" . $name . "</h5>
                         <p class='card-text'>" . $descr . "</p>
                         <a href='showpl.php?pl=" . $idpl . "' class='card-link'>Ver playlist</a>
-                        <a href='delpl.php?id=" . $idpl . " 'class='card-link'>Eliminar</a>
                     </div>
                     ";
                     echo "</div>";

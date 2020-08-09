@@ -101,7 +101,13 @@
             }
         ?>
             <h2 class="text-center"> <?php echo $alname; ?><br> <small class="text-muted"><?php echo $algenre . " - " . $aldate; ?></small> 
-            <br> <a class="btn btn-outline-secondary btn-sm" href="changeal.php?al= <?php echo $_GET['id'];?>" role="button">Modificar</a> </h2>
+            <br>
+            <?php
+                if($mine == ""){
+                    echo "<a class='btn btn-outline-secondary btn-sm' href='changeal.php?al=" . $_GET['id'] . "' role='button'>Modificar</a>";
+                    }
+            ?>
+            </h2>
             <table class="table">
             <thead>
                 <tr>
