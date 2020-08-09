@@ -67,6 +67,57 @@
         
     </div>
     </nav>
+    
+
+            <?php
+                
+
+                if(! $_SESSION['artist']){
+                    echo " <h3 class='text-center' style='margin-top: 15px;'>Liked Songs </h3>
+                    <span class='border '>
+                        <div class='container shadow p-3 mb-5 bg-white rounded'>
+                            <table class='table '>
+                            <thead class='thead-light'>
+                                <tr>
+                                <th scope='col'>#</th>
+                                <th scope='col'>Nombre</th>
+                                <th scope='col'>Artista</th>
+                                <th scope='col'>Duracion</th>
+                                <th scope='col'>Genero</th>
+                                <th scope='col'>Unlike</th>
+                                </tr>
+                            </thead>";
+                    $cont = 0;
+                    $arraySongsLiked = $db->getLikedSongs($pdo, $_SESSION['id']); #name, genre, length, ID_AC, publ
+                    foreach($arraySongsLiked as $songID){
+                        $songID = $songID[0];
+                        $cont++;
+                        $arrayData = $db->getSongData($pdo, $songID);
+                        list($name, $genre, $length, $ID_AC, $publ) = $arrayData[0];
+                        $artista =  $db->getSongArtist($pdo, $songID);
+                        
+                        $min = floor($length/60);
+                        $sec = $length-($min*60);
+                        echo "  <tr>
+                                <th scope='row'>" . $cont . "</th>
+                                <td>" . $name . "</td>
+                                <td>" . $artista . "</td>
+                                <td>" . $min . ":" . $sec . "</td>
+                                <td>" . $genre . "</td>
+                                <form action='likesong.php' method='get'>
+                                <td> <button type='submit' name=songid value='" . $songID . "' class='btn btn-danger' >Unlike</button> </td>
+                                </form>
+                                </tr>";
+                    }
+                }
+
+                
+
+
+            ?>
+            </table>
+            </div>
+        </span>
 
     <span class="border ">
         <div class="container shadow p-3 mb-5 bg-white rounded">
@@ -78,6 +129,7 @@
                 <th scope="col">Artista</th>
                 <th scope="col">Duracion</th>
                 <th scope="col">Genero</th>
+                <th scope="col">Like</th>
                 </tr>
             </thead>
 
@@ -86,22 +138,51 @@
                 $arraySongs = $db->getAllSongs($pdo); #name, genre, length, ID_AC, publ
 
                 foreach($arraySongs as $songID){
-                    $songID = $songID[0];
-                    $cont++;
-                    $arrayData = $db->getSongData($pdo, $songID);
-                    list($name, $genre, $length, $ID_AC, $publ) = $arrayData[0];
-                    $artista =  $db->getSongArtist($pdo, $songID);
+                    if($_SESSION['artist']){
+                        $songID = $songID[0];
+                        $cont++;
+                        $arrayData = $db->getSongData($pdo, $songID);
+                        list($name, $genre, $length, $ID_AC, $publ) = $arrayData[0];
+                        $artista =  $db->getSongArtist($pdo, $songID);
+                        
+                        $min = floor($length/60);
+                        $sec = $length-($min*60);
+                        echo "  <tr>
+                                <th scope='row'>" . $cont . "</th>
+                                <td>" . $name . "</td>
+                                <td>" . $artista . "</td>
+                                <td>" . $min . ":" . $sec . "</td>
+                                <td>" . $genre . "</td>
+                                <form action='likesong.php' method='get'>
+                                <td> <button type='submit' name=songid value='" . $songID . "' class='btn btn-outline-dark' disabled>Like</button> </td>
+                                </form>
+                                </tr>";
+                        
+                    }
+                    else{
+                        if(! in_array($songID, $arraySongsLiked)){
+
+                        $songID = $songID[0];
+                        $cont++;
+                        $arrayData = $db->getSongData($pdo, $songID);
+                        list($name, $genre, $length, $ID_AC, $publ) = $arrayData[0];
+                        $artista =  $db->getSongArtist($pdo, $songID);
+                        
+                        $min = floor($length/60);
+                        $sec = $length-($min*60);
+                        echo "  <tr>
+                                <th scope='row'>" . $cont . "</th>
+                                <td>" . $name . "</td>
+                                <td>" . $artista . "</td>
+                                <td>" . $min . ":" . $sec . "</td>
+                                <td>" . $genre . "</td>
+                                <form action='likesong.php' method='get'>
+                                <td> <button type='submit' name=songid value='" . $songID . "' class='btn btn-success' >Like</button> </td>
+                                </form>
+                                </tr>";
+                    }
                     
-                    $min = floor($length/60);
-                    $sec = $length-($min*60);
-                    echo "  <tr>
-                            <th scope='row'>" . $cont . "</th>
-                            <td>" . $name . "</td>
-                            <td>" . $artista . "</td>
-                            <td>" . $min . ":" . $sec . "</td>
-                            <td>" . $genre . "</td>
-                            </tr>";
-                }
+                }}
 
 
             ?>

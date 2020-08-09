@@ -424,6 +424,37 @@ class DB{
         $q->execute();
     }
     
+    function isLiked($pdo, $songid, $idac){
+        $str = "SELECT * FROM `Usuario-Canciones` WHERE `ID_ac` = " . $idac . " AND `ID_s` =" . $songid;
+        $q = $pdo->prepare($str);
+        $q->execute();
+        $cant = $q->rowCount();
+        if ($cant > 0){
+            return true;
+        }
+        return false;
+    }
 
+    function getLikedSongs($pdo, $idac){
+        $str = "SELECT `ID_s` FROM `Usuario-Canciones` WHERE `ID_ac` =" . $idac;
+        $q = $pdo->prepare($str);
+        $q->execute();
+        $retorno = $q->fetchAll();
+        return $retorno;
+    }
+
+    function likeSong($pdo, $idac, $idsong){
+        $str = "INSERT INTO `Usuario-Canciones` (`ID_ac`, `ID_s`) VALUES (" . $idac . ", '" . $idsong . "')";
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
+    function unlikeSong($pdo, $idac, $idsong){
+        $str = "DELETE FROM `Usuario-Canciones` WHERE `Usuario-Canciones`.`ID_ac` = " . $idac . " AND `Usuario-Canciones`.`ID_s` = " . $idsong;
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
+    
 
 }
