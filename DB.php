@@ -574,4 +574,10 @@ class DB{
         $q = $pdo->prepare($str);
         $q->execute();
     }
+
+    function deleteAccount($pdo, $idac){
+        $str = "DELETE FROM `persona` WHERE `persona`.`ID_ac` = " . $idac;
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
 }

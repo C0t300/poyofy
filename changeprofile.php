@@ -99,6 +99,9 @@
             
             
         </form>
+
+        <br>
+        <a class="btn btn-danger" href="deleteaccount.php" role="button">Borrar Cuenta</a>
     </div>
    
 

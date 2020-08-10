@@ -21,12 +21,11 @@
         $pdo = $db->connect();
 
         $alid = $_GET['al'];
-        $data = $db->getAlbumDetail($pdo, $alid); #ID_al, nombre, canciones, genero, id_ac, fecha
+        $data = $db->getAlbumDetail($pdo, $alid); #ID_al, nombre, genero, id_ac, fecha
         $alname = $data[1];
-        $alsongs = $data[2];
-        $algenre = $data[3];
-        $alowner = $data[4];
-        $aldate = $data[5];
+        $algenre = $data[2];
+        $alowner = $data[3];
+        $aldate = $data[4];
         if($alowner != $_SESSION['id']){
             header("Location: home.php");
         }
