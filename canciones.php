@@ -103,6 +103,9 @@
                         else{
                             $min = floor($length/60);
                             $sec = $length-($min*60);
+                            if($sec < 10){
+                                $sec = "0" . $sec;
+                            }
                         }
 
                         echo "  <tr>
@@ -131,7 +134,7 @@
                                 <th scope='col'>Artista</th>
                                 <th scope='col'>Duracion</th>
                                 <th scope='col'>Genero</th>
-                                <th scope='col'>Unlike</th>
+                                <th scope='col'>Modify</th>
                                 </tr>
                             </thead>";
                     $cont = 0;
@@ -141,7 +144,6 @@
                         array_push($asm, $songID);
                     }
                     foreach($asm as $songID){
-                        $songID = $songID[0];
                         $cont++;
                         $arrayData = $db->getSongData($pdo, $songID);
                         list($name, $genre, $length, $ID_AC, $publ) = $arrayData[0];
@@ -154,6 +156,9 @@
                         else{
                             $min = floor($length/60);
                             $sec = $length-($min*60);
+                            if($sec < 10){
+                                $sec = "0" . $sec;
+                            }
                         }
                         echo "  <tr>
                                 <th scope='row'>" . $cont . "</th>
@@ -161,8 +166,8 @@
                                 <td>" . $artista . "</td>
                                 <td>" . $min . ":" . $sec . "</td>
                                 <td>" . $genre . "</td>
-                                <form action='deletesong.php' method='get'>
-                                <td> <button type='submit' name=songid value='" . $songID . "' class='btn btn-danger' >Delete</button> </td>
+                                <form action='changesong.php' method='get'>
+                                <td> <button type='submit' name=songid value='" . $songID . "' class='btn btn-danger' >Modificar</button> </td>
                                 </form>
                                 </tr>";
                     }
@@ -215,6 +220,9 @@
                             else{
                                 $min = floor($length/60);
                                 $sec = $length-($min*60);
+                                if($sec < 10){
+                                    $sec = "0" . $sec;
+                                }
                             }
                             echo "  <tr>
                                     <th scope='row'>" . $cont . "</th>

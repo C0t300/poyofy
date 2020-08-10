@@ -147,6 +147,9 @@
                     else{
                         $min = floor($length/60);
                         $sec = $length-($min*60);
+                        if($sec < 10){
+                            $sec = "0" . $sec;
+                        }
                     }
                     echo "  <tr>
                             <th scope='row'>" . $cont . "</th>
@@ -215,6 +218,9 @@
                         else{
                             $min = floor($length/60);
                             $sec = $length-($min*60);
+                            if($sec < 10){
+                                $sec = "0" . $sec;
+                            }
                         }
                         echo "  <tr>
                                 <td>" . $name . "</td>
