@@ -126,8 +126,13 @@
                 
                 $arraySongs = $db->getAlbumSongs($pdo, $plID); #name, genre, length, ID_AC, publ
 
-                foreach($arraySongs as $songID){
-                    $songID = $songID[0];
+                $albumSongs = [];
+                foreach($arraySongs as $sid){
+                    array_push($albumSongs, $sid[0]);
+                }
+
+
+                foreach($albumSongs as $songID){
                     $cont++;
                     $arrayData = $db->getSongData($pdo, $songID);
                     list($name, $genre, $length, $ID_AC, $publ) = $arrayData[0];
@@ -205,32 +210,33 @@
                     $arraySongs = $db->searchSongsArtist($pdo, $search, $_SESSION['id']); #name, genre, length, ID_AC, publ
 
                     foreach($arraySongs as $songID){
-                        $songID = $songID[0];
-                        $cont++;
-                        $arrayData = $db->getSongData($pdo, $songID);
-                        list($name, $genre, $length, $ID_AC, $publ) = $arrayData[0];
-                        $artista =  $db->getSongArtist($pdo, $songID);
-                        
-                        if(is_null($length)){
-                            $min = "Sin";
-                            $sec = "largo";
-                        }
-                        else{
-                            $min = floor($length/60);
-                            $sec = $length-($min*60);
-                            if($sec < 10){
-                                $sec = "0" . $sec;
+                        if(!in_array($songID, $albumSongs)){
+                            $cont++;
+                            $arrayData = $db->getSongData($pdo, $songID);
+                            list($name, $genre, $length, $ID_AC, $publ) = $arrayData[0];
+                            $artista =  $db->getSongArtist($pdo, $songID);
+                            
+                            if(is_null($length)){
+                                $min = "Sin";
+                                $sec = "largo";
                             }
+                            else{
+                                $min = floor($length/60);
+                                $sec = $length-($min*60);
+                                if($sec < 10){
+                                    $sec = "0" . $sec;
+                                }
+                            }
+                            echo "  <tr>
+                                    <td>" . $name . "</td>
+                                    <td>" . $artista . "</td>
+                                    <form action='showal.php' method='get'>
+                                    <input type='hidden' name='id' value='" . $_GET['id'] . "'>
+                                    <td> <button type='submit' name='songidadd' value='" . $songID . "' class='btn btn-secondary' " . $mine . ">Agregar</button> </td>
+                                    </form>
+                                    </tr>";
+                                    
                         }
-                        echo "  <tr>
-                                <td>" . $name . "</td>
-                                <td>" . $artista . "</td>
-                                <form action='showal.php' method='get'>
-                                <input type='hidden' name='id' value='" . $_GET['id'] . "'>
-                                <td> <button type='submit' name='songidadd' value='" . $songID . "' class='btn btn-secondary' " . $mine . ">Agregar</button> </td>
-                                </form>
-                                </tr>";
-                                
                     }
                     
 
