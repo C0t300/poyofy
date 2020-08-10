@@ -67,6 +67,61 @@
         
     </div>
     </nav>
+
+    <div class="container" style="margin-top:15px;">
+        <div class="card">
+            <div class="card-header">
+                <?php echo $_SESSION['name'];?>
+            </div>
+            <div class="card-body">
+                <p><?php echo "Seguidores: " . $db->getAmmountFollowersAccount($pdo, $_SESSION['id']); ?></p>
+                <a class="btn btn-secondary" href="myprofile.php" role="button"><?php if($_SESSION['artist']){ echo "Artista";} else{echo "Usuario";} ?></a>
+            </div>
+        </div>
+
+        <div class='card-deck' style='margin-top:25px'>
+
+            <?php 
+
+            $randpl = $db->getRandomPlaylist($pdo); #ID_pl, name
+            if($randpl != false){
+                echo "<div class='card' style='width: 18rem;'>
+                        <div class='card-body'>
+                            <h5 class='card-title'>Random Playlist</h5>
+                            <p class='card-text'>" . $randpl[1] . "</p>
+                            <a href='showpl.php?pl=" . $randpl[0] . "' class='btn btn-primary'>Go</a>
+                        </div>
+                        </div>";
+            }
+
+            $randal = $db->getRandomAlbum($pdo); #ID_al, nombre
+            if($randal != false){
+                echo "<div class='card' style='width: 18rem;'>
+                        <div class='card-body'>
+                            <h5 class='card-title'>Random Album</h5>
+                            <p class='card-text'>" . $randal[1] . "</p>
+                            <a href='showal.php?id=" . $randal[0] . "' class='btn btn-primary'>Go</a>
+                        </div>
+                        </div>";
+            }
+
+            $randguy = $db->getRandomAccount($pdo, $_SESSION['id']); #ID_ac, name
+            if($randguy != false){
+                echo "<div class='card' style='width: 18rem;'>
+                        <div class='card-body'>
+                            <h5 class='card-title'>Random Account</h5>
+                            <p class='card-text'>" . $randguy[1] . "</p>
+                            <a href='viewprofile.php?ac=" . $randguy[0] . "' class='btn btn-primary'>Go</a>
+                        </div>
+                        </div>";
+            }
+
+            ?>
+
+            
+
+        </div>
+    </div>
     
    
 

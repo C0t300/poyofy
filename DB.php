@@ -580,4 +580,41 @@ class DB{
         $q = $pdo->prepare($str);
         $q->execute();
     }
+
+    function getRandomPlaylist($pdo){ #ID_pl, name
+        $str = "SELECT ID_pl, name FROM playlists
+        ORDER BY RAND()
+        LIMIT 1";
+        $q = $pdo->prepare($str);
+        $q->execute();
+        if($q->rowCount() < 1){
+            return false;
+        }
+        return $q->fetch();
+    }
+
+    function getRandomAlbum($pdo){ #ID_al, nombre
+        $str = "SELECT ID_al, nombre FROM albumes
+        ORDER BY RAND()
+        LIMIT 1";
+        $q = $pdo->prepare($str);
+        $q->execute();
+        if($q->rowCount() < 1){
+            return false;
+        }
+        return $q->fetch();
+    }
+
+    function getRandomAccount($pdo, $idac){ #ID_ac, name
+        $str = "SELECT ID_ac, name FROM persona
+        WHERE ID_ac != " . $idac . "
+        ORDER BY RAND()
+        LIMIT 1";
+        $q = $pdo->prepare($str);
+        $q->execute();
+        if($q->rowCount() < 1){
+            return false;
+        }
+        return $q->fetch();
+    }
 }
