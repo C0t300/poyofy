@@ -91,7 +91,7 @@ class DB{
         return $retorno;
     }
 
-    function getSongData($pdo, $sID){
+    function getSongData($pdo, $sID){ #{name, genre, length, ID_AC, publ}
         $str = "SELECT name, genre, length, ID_AC, publ FROM `Canciones` WHERE `ID_s` = '" . $sID . "'";
         #$q = $this->query($pdo, $str);
         $q = $pdo->prepare($str);
@@ -547,6 +547,30 @@ class DB{
 
     function createSong($pdo, $name, $genre, $length, $date, $idac){
         $str = "INSERT INTO `Canciones` (`ID_s`, `name`, `genre`, `length`, `ID_ac`, `publ`, `ID_al`) VALUES (NULL, '" . $name . "', '" . $genre . "', '" . $length . "', '" . $idac . "', '" . $date . "', NULL)";
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
+    function updateNameSong($pdo, $idsong, $name){
+        $str = "UPDATE `Canciones` SET `name` = '" . $name . "' WHERE `Canciones`.`ID_s` = " . $idsong;
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
+    function updateGenreSong($pdo, $idsong, $genre){
+        $str = "UPDATE `Canciones` SET `genre` = '" . $genre . "' WHERE `Canciones`.`ID_s` = " . $idsong;
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
+    function updateDateSong($pdo, $idsong, $date){
+        $str = "UPDATE `Canciones` SET `publ` = '" . $date . "' WHERE `Canciones`.`ID_s` = " . $idsong;
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
+    function updateLengthSong($pdo, $idsong, $length){
+        $str = "UPDATE `Canciones` SET `length` = '" . $length . "' WHERE `Canciones`.`ID_s` = " . $idsong;
         $q = $pdo->prepare($str);
         $q->execute();
     }
