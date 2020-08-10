@@ -90,7 +90,6 @@
                 $arraySongs = $db->searchSongs($pdo, $search); #name, genre, length, ID_AC, publ
 
                 foreach($arraySongs as $songID){
-                    $songID = $songID[0];
                     $cont++;
                     $arrayData = $db->getSongData($pdo, $songID);
                     list($name, $genre, $length, $ID_AC, $publ) = $arrayData[0];
