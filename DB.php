@@ -235,7 +235,7 @@ class DB{
         return $lista;
     }
 
-    #ID_al, nombre, canciones, genero, id_ac, fecha
+    #ID_al, nombre, genero, id_ac, fecha
     function getAlbumDetail($pdo, $ID){
         $str = "SELECT * FROM `albumes` WHERE `ID_al` =" . $ID;
         $q = $pdo->prepare($str);
@@ -511,5 +511,19 @@ class DB{
         $q = $pdo->prepare($str);
         $q->execute();
         return $q->rowCount();
+    }
+
+    function deleteSong($pdo, $idsong){
+        $str = "DELETE FROM `Canciones` WHERE `Canciones`.`ID_s` = " . $idsong;
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
+    function getAccountSongs($pdo, $idac){
+        $str = "SELECT `ID_s` FROM `Canciones` WHERE `ID_ac` = " . $idac;
+        $q = $pdo->prepare($str);
+        $q->execute();
+        $retorno = $q->fetchAll();
+        return $retorno;
     }
 }

@@ -130,11 +130,11 @@
                 echo "<div class='card-deck' style='margin-top:25px'>";
                 foreach($albums as $al){
                     
-                    $info = $db->getAlbumDetail($pdo, $al); #ID_al, nombre, canciones, genero, id_ac, fecha
+                    $info = $db->getAlbumDetail($pdo, $al); #ID_al, nombre, genero, id_ac, fecha
                     $idal = $info[0];
                     $name = $info[1];
-                    $genre = $info[3];
-                    $date = $info[5];
+                    $genre = $info[2];
+                    $date = $info[4];
                 
                     echo "<div class='card' style='width: 18rem;'>";
                     echo "

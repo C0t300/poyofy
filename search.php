@@ -96,8 +96,14 @@
                     list($name, $genre, $length, $ID_AC, $publ) = $arrayData[0];
                     $artista =  $db->getSongArtist($pdo, $songID);
                     
-                    $min = floor($length/60);
-                    $sec = $length-($min*60);
+                    if(is_null($length)){
+                        $min = "Sin";
+                        $sec = "largo";
+                    }
+                    else{
+                        $min = floor($length/60);
+                        $sec = $length-($min*60);
+                    }
                     echo "  <tr>
                             <th scope='row'>" . $cont . "</th>
                             <td>" . $name . "</td>

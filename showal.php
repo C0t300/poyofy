@@ -22,13 +22,12 @@
         include_once "DB.php";
         $db = new DB();
         $pdo = $db->connect();
-        $data = $db->getAlbumDetail($pdo, $_GET['id']);#ID_al, nombre, canciones, genero, id_ac, fecha
+        $data = $db->getAlbumDetail($pdo, $_GET['id']);#ID_al, nombre, genero, id_ac, fecha
         $idal = $data[0];
         $alname = $data[1];
-        $alsongs = $data[2];
-        $algenre = $data[3];
-        $alacid = $data[4];
-        $aldate = $data[5];
+        $algenre = $data[2];
+        $alacid = $data[3];
+        $aldate = $data[4];
         $mine = "disabled";
                 if ($alacid == $_SESSION['id']){
                     $mine = "";
@@ -141,8 +140,14 @@
                         $album = $db->getAlbumDetail($pdo, $album)[1];
                     }
                     
-                    $min = floor($length/60);
-                    $sec = $length-($min*60);
+                    if(is_null($length)){
+                        $min = "Sin";
+                        $sec = "largo";
+                    }
+                    else{
+                        $min = floor($length/60);
+                        $sec = $length-($min*60);
+                    }
                     echo "  <tr>
                             <th scope='row'>" . $cont . "</th>
                             <td>" . $name . "</td>
@@ -203,8 +208,14 @@
                         list($name, $genre, $length, $ID_AC, $publ) = $arrayData[0];
                         $artista =  $db->getSongArtist($pdo, $songID);
                         
-                        $min = floor($length/60);
-                        $sec = $length-($min*60);
+                        if(is_null($length)){
+                            $min = "Sin";
+                            $sec = "largo";
+                        }
+                        else{
+                            $min = floor($length/60);
+                            $sec = $length-($min*60);
+                        }
                         echo "  <tr>
                                 <td>" . $name . "</td>
                                 <td>" . $artista . "</td>

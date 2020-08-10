@@ -95,9 +95,16 @@
                         $arrayData = $db->getSongData($pdo, $songID);
                         list($name, $genre, $length, $ID_AC, $publ) = $arrayData[0];
                         $artista =  $db->getSongArtist($pdo, $songID);
-                        
-                        $min = floor($length/60);
-                        $sec = $length-($min*60);
+
+                        if(is_null($length)){
+                            $min = "Sin";
+                            $sec = "largo";
+                        }
+                        else{
+                            $min = floor($length/60);
+                            $sec = $length-($min*60);
+                        }
+
                         echo "  <tr>
                                 <th scope='row'>" . $cont . "</th>
                                 <td>" . $name . "</td>
@@ -106,6 +113,54 @@
                                 <td>" . $genre . "</td>
                                 <form action='likesong.php' method='get'>
                                 <td> <button type='submit' name=songid value='" . $songID . "' class='btn btn-danger' >Unlike</button> </td>
+                                </form>
+                                </tr>";
+                    }
+                }
+                else{
+                    echo " <h3 class='text-center' style='margin-top: 15px;'>Tus Canciones</h3>
+                    <span class='border '>
+                        <div class='container shadow p-3 mb-5 bg-white rounded'>
+                            <table class='table '>
+                            <thead class='thead-light'>
+                                <tr>
+                                <th scope='col'>#</th>
+                                <th scope='col'>Nombre</th>
+                                <th scope='col'>Artista</th>
+                                <th scope='col'>Duracion</th>
+                                <th scope='col'>Genero</th>
+                                <th scope='col'>Unlike</th>
+                                </tr>
+                            </thead>";
+                    $cont = 0;
+                    $arraySongsMine = $db->getAccountSongs($pdo, $_SESSION['id']); #name, genre, length, ID_AC, publ
+                    $asm = [];
+                    foreach($arraySongsMine as list($songID)){
+                        array_push($asm, $songID);
+                    }
+                    foreach($asm as $songID){
+                        $songID = $songID[0];
+                        $cont++;
+                        $arrayData = $db->getSongData($pdo, $songID);
+                        list($name, $genre, $length, $ID_AC, $publ) = $arrayData[0];
+                        $artista =  $db->getSongArtist($pdo, $songID);
+                        
+                        if(is_null($length)){
+                            $min = "Sin";
+                            $sec = "largo";
+                        }
+                        else{
+                            $min = floor($length/60);
+                            $sec = $length-($min*60);
+                        }
+                        echo "  <tr>
+                                <th scope='row'>" . $cont . "</th>
+                                <td>" . $name . "</td>
+                                <td>" . $artista . "</td>
+                                <td>" . $min . ":" . $sec . "</td>
+                                <td>" . $genre . "</td>
+                                <form action='deletesong.php' method='get'>
+                                <td> <button type='submit' name=songid value='" . $songID . "' class='btn btn-danger' >Delete</button> </td>
                                 </form>
                                 </tr>";
                     }
@@ -139,25 +194,32 @@
 
                 foreach($arraySongs as $songID){
                     if($_SESSION['artist']){
-                        $songID = $songID[0];
-                        $cont++;
-                        $arrayData = $db->getSongData($pdo, $songID);
-                        list($name, $genre, $length, $ID_AC, $publ) = $arrayData[0];
-                        $artista =  $db->getSongArtist($pdo, $songID);
-                        
-                        $min = floor($length/60);
-                        $sec = $length-($min*60);
-                        echo "  <tr>
-                                <th scope='row'>" . $cont . "</th>
-                                <td>" . $name . "</td>
-                                <td>" . $artista . "</td>
-                                <td>" . $min . ":" . $sec . "</td>
-                                <td>" . $genre . "</td>
-                                <form action='likesong.php' method='get'>
-                                <td> <button type='submit' name=songid value='" . $songID . "' class='btn btn-outline-dark' disabled>Like</button> </td>
-                                </form>
-                                </tr>";
-                        
+                        if(!in_array($songID[0], $asm)){
+                            $songID = $songID[0];
+                            $cont++;
+                            $arrayData = $db->getSongData($pdo, $songID);
+                            list($name, $genre, $length, $ID_AC, $publ) = $arrayData[0];
+                            $artista =  $db->getSongArtist($pdo, $songID);
+                            
+                            if(is_null($length)){
+                                $min = "Sin";
+                                $sec = "largo";
+                            }
+                            else{
+                                $min = floor($length/60);
+                                $sec = $length-($min*60);
+                            }
+                            echo "  <tr>
+                                    <th scope='row'>" . $cont . "</th>
+                                    <td>" . $name . "</td>
+                                    <td>" . $artista . "</td>
+                                    <td>" . $min . ":" . $sec . "</td>
+                                    <td>" . $genre . "</td>
+                                    <form action='likesong.php' method='get'>
+                                    <td> <button type='submit' name=songid value='" . $songID . "' class='btn btn-outline-dark' disabled>Like</button> </td>
+                                    </form>
+                                    </tr>";
+                        }
                     }
                     else{
                         if(! in_array($songID, $arraySongsLiked)){
@@ -168,8 +230,14 @@
                         list($name, $genre, $length, $ID_AC, $publ) = $arrayData[0];
                         $artista =  $db->getSongArtist($pdo, $songID);
                         
-                        $min = floor($length/60);
-                        $sec = $length-($min*60);
+                        if(is_null($length)){
+                            $min = "Sin";
+                            $sec = "largo";
+                        }
+                        else{
+                            $min = floor($length/60);
+                            $sec = $length-($min*60);
+                        }
                         echo "  <tr>
                                 <th scope='row'>" . $cont . "</th>
                                 <td>" . $name . "</td>
