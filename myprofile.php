@@ -118,9 +118,13 @@
             <?php 
                 if($_SESSION['artist']){
                     echo "Albumes";
+                    echo "<br>";
+                    echo "<a class='btn btn-dark' style='margin-top: 15px;' href='createal.php' role='button'>Crear Album</a>";
                 }
                 else{
                     echo "Playlists";
+                    echo "<br>";
+                    echo "<a class='btn btn-dark' style='margin-top: 15px;' href='createpl.php' role='button'>Crear Playlist</a>";
                 }
             ?> 
         </h3>

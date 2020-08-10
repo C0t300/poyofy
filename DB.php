@@ -526,4 +526,22 @@ class DB{
         $retorno = $q->fetchAll();
         return $retorno;
     }
+
+    function createAlbum($pdo, $name, $genre, $date, $idac){
+        $str = "INSERT INTO `albumes` (`ID_al`, `nombre`, `genero`, `ID_ac`, `fecha`) VALUES (NULL, '" . $name . "', '" . $genre . "', '" . $idac . "', '" . $date . "')";
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
+    function createPlaylist($pdo, $name, $desc, $idac){
+        $str = "INSERT INTO `playlists` (`ID_pl`, `name`, `descr`, `ID_ac`) VALUES (NULL, '" . $name . "', '" . $desc . "', '" . $idac . "')";
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
+
+    function deletePlaylist($pdo, $idpl){
+        $str = "DELETE FROM `playlists` WHERE `playlists`.`ID_pl` = " . $idpl;
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
 }

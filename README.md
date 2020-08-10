@@ -26,10 +26,10 @@
 + ver persona [done]
 + agregar cuantos seguidores tiene una persona [done]
 + eliminar canciones [done]
++ trigger [done]
 + crear albums
 + crear playlists
 + crear canciones
-+ trigger para cantidad de canciones album
 + ARREGLAR EL NAVBAR EN TODOS LADOS
 
 
