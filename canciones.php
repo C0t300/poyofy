@@ -31,7 +31,7 @@
   <body>
 
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <nav class="navbar navbar-dark bg-dark">
     <a class="navbar-brand" href="home.php">
     <img src="Poyofy.png" width="30" height="30" alt="Poyofy Icon">
@@ -50,7 +50,7 @@
             <a class="nav-link" href="playlist.php">Playlists</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Personas</a>
+            <a class="nav-link" href="personas.php">Personas</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="myprofile.php">Mi Cuenta</a>

@@ -33,6 +33,7 @@
 + modificar canciones [done]
 + borrar cuenta [done]
 + ARREGLAR EL NAVBAR EN TODOS LADOS
++ hacer el home
 
 
 #### Index
