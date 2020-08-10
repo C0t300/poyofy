@@ -27,9 +27,9 @@
 + agregar cuantos seguidores tiene una persona [done]
 + eliminar canciones [done]
 + trigger [done]
-+ crear albums
-+ crear playlists
-+ crear canciones
++ crear albums [done]
++ crear playlists [done]
++ crear canciones [done]
 + ARREGLAR EL NAVBAR EN TODOS LADOS
 
 

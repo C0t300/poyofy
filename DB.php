@@ -544,4 +544,10 @@ class DB{
         $q = $pdo->prepare($str);
         $q->execute();
     }
+
+    function createSong($pdo, $name, $genre, $length, $date, $idac){
+        $str = "INSERT INTO `Canciones` (`ID_s`, `name`, `genre`, `length`, `ID_ac`, `publ`, `ID_al`) VALUES (NULL, '" . $name . "', '" . $genre . "', '" . $length . "', '" . $idac . "', '" . $date . "', NULL)";
+        $q = $pdo->prepare($str);
+        $q->execute();
+    }
 }

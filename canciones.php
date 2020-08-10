@@ -118,7 +118,9 @@
                     }
                 }
                 else{
-                    echo " <h3 class='text-center' style='margin-top: 15px;'>Tus Canciones</h3>
+                    echo " <div class='mx-auto' style='width: 200px; margin-top: 15px;'>
+                    <h3>Tus Canciones</h3>
+                    </div>
                     <span class='border '>
                         <div class='container shadow p-3 mb-5 bg-white rounded'>
                             <table class='table '>
@@ -171,6 +173,11 @@
 
             ?>
             </table>
+            <?php 
+            if($_SESSION['artist']){
+                echo "<a class='btn btn-outline-info' href='createsong.php' role='button'>Crear Cancion</a>";
+            }
+            ?>  
             </div>
         </span>
 
