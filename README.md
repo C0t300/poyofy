@@ -30,7 +30,7 @@
 + crear albums [done]
 + crear playlists [done]
 + crear canciones [done]
-+ modificar canciones
++ modificar canciones [done]
 + ARREGLAR EL NAVBAR EN TODOS LADOS
 
 
